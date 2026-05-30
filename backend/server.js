@@ -56,7 +56,42 @@ async function saveTranscription() {
 
 saveTranscription();
 app.use("/api", require("./routes/transcribe"));
+app.use("/api/history", require("./routes/history"));
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
+
+
+const router = express.Router();
+
+const upload = multer({
+  dest: "uploads/",
+});
+
+
+router.post(
+  "/transcribe",
+  upload.single("audio"),
+  async (req, res) => {
+    try {
+      const file = req.file;
+
+      
+      const transcription =
+        "This is a sample transcription result.";
+
+      res.json({
+        success: true,
+        transcription,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+);
+
+module.exports = router;

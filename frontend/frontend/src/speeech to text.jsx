@@ -78,5 +78,55 @@ function SpeechToText() {
     </div>
   );
 }
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+function SpeechToText({ email }) {
+  const [history, setHistory] = useState([]);
+
+  const fetchHistory = async () => {
+    try {
+      const response =
+        await axios.get(
+          `http://localhost:5000/api/history/${email}`
+        );
+
+      setHistory(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
+
+  return (
+    <div>
+      <h2 className="text-2xl font-bold mb-4">
+        Previous Transcriptions
+      </h2>
+
+      {history.map((item) => (
+        <div
+          key={item.id}
+          className="border p-4 mb-3 rounded"
+        >
+          <h3 className="font-semibold">
+            {item.file_name}
+          </h3>
+
+          <p>{item.transcription}</p>
+
+          <small>
+            {new Date(
+              item.created_at
+            ).toLocaleString()}
+          </small>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default SpeechToText;
