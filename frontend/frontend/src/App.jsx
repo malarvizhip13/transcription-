@@ -3,21 +3,19 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import Login from "./Login";
+import Dashboard from "./Dashboard";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
+  const [email, setEmail] = useState("")
+return (
     <>
-     <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-3xl font-bold  ">
-        Speech To Text App
-      </h1>
-    </div>
-  
-export default App;
+     {!email ? (
+        <Login onLogin={setEmail} />
+      ) : (
+        <Dashboard email={email} />
+      )}
     </>
-  )
+  );
 }
-
-export default App
+export default App;
