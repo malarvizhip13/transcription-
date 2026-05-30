@@ -13,3 +13,26 @@ app.get("/", (req, res) => {
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
+
+
+
+const supabase = require("./config/supabase");
+
+async function saveTranscription() {
+  const { data, error } = await supabase
+    .from("transcriptions")
+    .insert([
+      {
+        audio_url: "audio1.wav",
+        transcription: "Hello World",
+      },
+    ]);
+
+  if (error) {
+    console.log(error);
+  } else {
+    console.log(data);
+  }
+}
+
+saveTranscription();
