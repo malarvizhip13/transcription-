@@ -55,3 +55,8 @@ async function saveTranscription() {
 }
 
 saveTranscription();
+app.use("/api", require("./routes/transcribe"));
+
+app.listen(5000, () => {
+  console.log("Server running on port 5000");
+});
