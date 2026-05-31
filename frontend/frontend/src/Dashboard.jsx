@@ -37,6 +37,8 @@ const [audioFile, setAudioFile] = useState(null);
     console.error(error);
     setText("Upload failed");
   }
+
+  
 };
   return (
     <div className="min-h-screen bg-gray-100 p-6">
