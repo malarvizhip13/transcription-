@@ -14,12 +14,12 @@ function Dashboard({ email }) {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h2 className="font-bold">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-xl font-bold text-gray-800">
           Welcome
         </h2>
 
-        <p>{email}</p>
+        <p  className="text-gray-600">{email}</p>
       </div>
 
       <div className="bg-white p-4 rounded shadow">
@@ -32,6 +32,7 @@ function Dashboard({ email }) {
           onChange={handleFile}
           className="mb-4"
         />
+        
 
         <button className="bg-green-500 text-white px-4 py-2 rounded mb-4 block">
           Record Audio
