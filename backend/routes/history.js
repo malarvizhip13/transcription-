@@ -9,7 +9,7 @@ router.get("/:email", async (req, res) => {
 
     const { data, error } =
       await supabase
-        .from("transcriptions")
+        .from("Transcriptions")
         .select("*")
         .eq("user_email", email)
         .order("created_at", {

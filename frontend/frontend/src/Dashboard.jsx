@@ -2,15 +2,42 @@ import { useState } from "react";
 
 function Dashboard({ email }) {
   const [text, setText] = useState("");
-
+const [audioFile, setAudioFile] = useState(null);
   const handleFile = (e) => {
     const file = e.target.files[0];
 
     if (file) {
-      setText("Audio file uploaded successfully.");
+       setAudioFile(file); 
+      setText("Audio file selected: " +file.name);
+      
     }
   };
 
+  const handleUpload = async () => {
+  if (!audioFile) {
+    alert("Please select an audio file");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("audio", audioFile);
+
+  try {
+    const response = await fetch("http://localhost:5000/api/transcribe",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await response.json();
+
+    setText(data.transcription);
+  } catch (error) {
+    console.error(error);
+    setText("Upload failed");
+  }
+};
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
@@ -34,8 +61,10 @@ function Dashboard({ email }) {
         />
         
 
-        <button className="bg-green-500 text-white px-4 py-2 rounded mb-4 block">
-          Record Audio
+        <button 
+        onClick={handleUpload} 
+         className="bg-green-500 text-white px-4 py-2 rounded mb-4 block">
+          Upload & Transcribe
         </button>
 
         <div className="border p-3 rounded">
